@@ -2,22 +2,53 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
+import helmet from 'helmet';
+import cors from 'cors';
+// import multer from 'multer'; // à activer pour upload fichiers
+// import { errorHandler } from './middlewares/errorHandler.js'; // à créer
+
 import authRoutes from './routes/auth.routes.js';
-import franchiseRoutes from './routes/franchise.routes.js';
-import camionRoutes from './routes/camion.routes.js';
+// import franchiseRoutes from './routes/franchise.routes.js';
+// import truckRoutes from './routes/truck.routes.js';
+// import warehouseRoutes from './routes/warehouse.routes.js';
+// import orderRoutes from './routes/order.routes.js';
+// import saleRoutes from './routes/sale.routes.js';
+// import maintenanceRoutes from './routes/maintenance.routes.js';
+// import breakdownRoutes from './routes/breakdown.routes.js';
+// import userRoutes from './routes/user.routes.js';
 
-const app = express();
 dotenv.config();
+const app = express();
 
+// Middlewares sécurité, logs, parsing, CORS
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+app.use(helmet());
+app.use(cors());
 
+// Routes de base (à compléter)
 app.use('/api/auth', authRoutes);
-app.use('/api/franchises', franchiseRoutes);
-app.use('/api/camions', camionRoutes);
+// app.use('/api/franchises', franchiseRoutes);
+// app.use('/api/trucks', truckRoutes);
+// app.use('/api/warehouses', warehouseRoutes);
+// app.use('/api/orders', orderRoutes);
+// app.use('/api/sales', saleRoutes);
+// app.use('/api/maintenances', maintenanceRoutes);
+// app.use('/api/breakdowns', breakdownRoutes);
+// app.use('/api/users', userRoutes);
 
-const PORT = process.env.PORT || 8083;
+app.get('/', (req, res) => res.send("API Driv'n Cook running"));
 
-mongoose.connect(process.env.MONGO_URI, {
+// Gestion des erreurs générique
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
+
+const PORT = process.env.PORT || 3000;
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {

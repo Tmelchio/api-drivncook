@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const maintenanceSchema = new mongoose.Schema({
   truckId: { type: mongoose.Schema.Types.ObjectId, ref: 'Truck' },
@@ -6,4 +6,4 @@ const maintenanceSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Maintenance', maintenanceSchema);
+export default mongoose.model('Maintenance', maintenanceSchema);

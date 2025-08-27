@@ -8,14 +8,19 @@ import cors from 'cors';
 // import multer from 'multer'; // à activer pour upload fichiers
 // import { errorHandler } from './middlewares/errorHandler.js'; // à créer
 
+
+
 import authRoutes from './routes/auth.routes.js';
-// import franchiseRoutes from './routes/franchise.routes.js';
-// import truckRoutes from './routes/truck.routes.js';
-// import warehouseRoutes from './routes/warehouse.routes.js';
-// import orderRoutes from './routes/order.routes.js';
-// import saleRoutes from './routes/sale.routes.js';
-// import maintenanceRoutes from './routes/maintenance.routes.js';
-// import breakdownRoutes from './routes/breakdown.routes.js';
+import franchiseRoutes from './routes/franchise.routes.js';
+import truckRoutes from './routes/truck.routes.js';
+import warehouseRoutes from './routes/warehouse.routes.js';
+import orderRoutes from './routes/order.routes.js';
+import saleRoutes from './routes/sale.routes.js';
+import maintenanceRoutes from './routes/maintenance.routes.js';
+import breakdownRoutes from './routes/breakdown.routes.js';
+import menuRoutes from './routes/menu.routes.js';
+import fidelityRoutes from './routes/fidelity.routes.js';
+import eventRoutes from './routes/event.routes.js';
 // import userRoutes from './routes/user.routes.js';
 
 dotenv.config();
@@ -29,14 +34,19 @@ app.use(helmet());
 app.use(cors());
 
 // Routes de base (à compléter)
+
+
 app.use('/api/auth', authRoutes);
-// app.use('/api/franchises', franchiseRoutes);
-// app.use('/api/trucks', truckRoutes);
-// app.use('/api/warehouses', warehouseRoutes);
-// app.use('/api/orders', orderRoutes);
-// app.use('/api/sales', saleRoutes);
-// app.use('/api/maintenances', maintenanceRoutes);
-// app.use('/api/breakdowns', breakdownRoutes);
+app.use('/api/franchises', franchiseRoutes);
+app.use('/api/trucks', truckRoutes);
+app.use('/api/warehouses', warehouseRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/sales', saleRoutes);
+app.use('/api/maintenances', maintenanceRoutes);
+app.use('/api/breakdowns', breakdownRoutes);
+app.use('/api/menus', menuRoutes);
+app.use('/api/fidelity', fidelityRoutes);
+app.use('/api/events', eventRoutes);
 // app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => res.send("API Driv'n Cook running"));

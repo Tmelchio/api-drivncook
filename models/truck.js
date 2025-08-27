@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const truckSchema = new mongoose.Schema({
   plate: { type: String, required: true, unique: true },
@@ -8,4 +8,4 @@ const truckSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Truck', truckSchema);
+export default mongoose.model('Truck', truckSchema);

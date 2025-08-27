@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const saleSchema = new mongoose.Schema({
   franchiseeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Franchise' },
@@ -6,4 +6,4 @@ const saleSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('Sale', saleSchema);
+export default mongoose.model('Sale', saleSchema);

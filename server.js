@@ -1,3 +1,6 @@
+import orderCountRoutes from './routes/order.count.routes.js';
+app.use('/api/orders', orderCountRoutes);
+import reviewRoutes from './routes/review.routes.js';
 // server.js
 import express from 'express';
 import mongoose from 'mongoose';
@@ -19,8 +22,10 @@ import saleRoutes from './routes/sale.routes.js';
 import maintenanceRoutes from './routes/maintenance.routes.js';
 import breakdownRoutes from './routes/breakdown.routes.js';
 import menuRoutes from './routes/menu.routes.js';
+import newsletterRoutes from './routes/newsletter.routes.js';
 import fidelityRoutes from './routes/fidelity.routes.js';
 import eventRoutes from './routes/event.routes.js';
+import userRoutes from './routes/user.routes.js';
 // import userRoutes from './routes/user.routes.js';
 
 dotenv.config();
@@ -36,6 +41,7 @@ app.use(cors());
 // Routes de base (à compléter)
 
 
+app.use('/api/reviews', reviewRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/franchises', franchiseRoutes);
 app.use('/api/trucks', truckRoutes);
@@ -45,9 +51,10 @@ app.use('/api/sales', saleRoutes);
 app.use('/api/maintenances', maintenanceRoutes);
 app.use('/api/breakdowns', breakdownRoutes);
 app.use('/api/menus', menuRoutes);
+app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/fidelity', fidelityRoutes);
 app.use('/api/events', eventRoutes);
-// app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => res.send("API Driv'n Cook running"));
 

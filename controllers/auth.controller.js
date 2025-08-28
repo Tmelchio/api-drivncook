@@ -3,13 +3,21 @@ import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
 
 export const register = async (req, res) => {
-  const { email, motDePasse, nom, prenom, role } = req.body;
+  const { email, motDePasse, nom, prenom, adresseLivraison, dateNaissance, role } = req.body;
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ message: 'Utilisateur déjà existant.' });
 
     const hashedPassword = await bcrypt.hash(motDePasse, 10);
-    const user = new User({ email, motDePasse: hashedPassword, nom, prenom, role });
+    const user = new User({
+      email,
+      motDePasse: hashedPassword,
+      nom,
+      prenom,
+      adresseLivraison,
+      dateNaissance,
+      role
+    });
     await user.save();
 
     res.status(201).json({ message: 'Utilisateur créé.' });

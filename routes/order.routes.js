@@ -3,9 +3,20 @@ import Order from '../models/order.js';
 const router = express.Router();
 
 // CRUD Order
+// GET /orders : renvoie toutes les infos utiles pour l'admin
 router.get('/', async (req, res) => {
-  const orders = await Order.find();
-  res.json(orders);
+  try {
+    const filter = {};
+    if (req.query.userId) {
+      filter.userId = req.query.userId;
+    }
+    const orders = await Order.find(filter)
+      .populate({ path: 'userId', select: 'email nom prenom adresseLivraison' })
+      .populate({ path: 'truckId', select: 'plate city address schedule' });
+    res.json(orders);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 router.get('/:id', async (req, res) => {
@@ -14,9 +25,28 @@ router.get('/:id', async (req, res) => {
   res.json(order);
 });
 
+// POST /orders : attend { userId, truckId, truckPlate, truckCity, menus: [{menuId, name, price, quantity}], date, status }
 router.post('/', async (req, res) => {
   try {
-    const order = new Order(req.body);
+    const { userId, truckId, menus } = req.body;
+    if (!userId || !truckId || !menus || !Array.isArray(menus) || menus.length === 0) {
+      return res.status(400).json({ error: 'Champs obligatoires manquants (userId, truckId, menus)' });
+    }
+    // Validation des menus
+    for (const m of menus) {
+      if (!m.menuId || !m.name || typeof m.price !== 'number' || typeof m.quantity !== 'number') {
+        return res.status(400).json({ error: 'Champs menu manquants (menuId, name, price, quantity)' });
+      }
+    }
+    const order = new Order({
+      userId: req.body.userId,
+      truckId: req.body.truckId,
+      truckPlate: req.body.truckPlate,
+      truckCity: req.body.truckCity,
+      menus: req.body.menus,
+      date: req.body.date || new Date(),
+      status: req.body.status || 'en attente'
+    });
     await order.save();
     res.status(201).json(order);
   } catch (e) {

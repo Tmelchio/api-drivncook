@@ -5,6 +5,8 @@ const userSchema = new mongoose.Schema({
   motDePasse: { type: String, required: true },
   nom: String,
   prenom: String,
+  adresseLivraison: String,
+  dateNaissance: Date,
   role: { type: String, enum: ['franchise', 'client', 'admin'], required: true }
 });
 

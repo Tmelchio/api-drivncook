@@ -1,6 +1,4 @@
-import orderCountRoutes from './routes/order.count.routes.js';
-app.use('/api/orders', orderCountRoutes);
-import reviewRoutes from './routes/review.routes.js';
+
 // server.js
 import express from 'express';
 import mongoose from 'mongoose';
@@ -11,8 +9,8 @@ import cors from 'cors';
 // import multer from 'multer'; // à activer pour upload fichiers
 // import { errorHandler } from './middlewares/errorHandler.js'; // à créer
 
-
-
+import orderCountRoutes from './routes/order.count.routes.js';
+import reviewRoutes from './routes/review.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import franchiseRoutes from './routes/franchise.routes.js';
 import truckRoutes from './routes/truck.routes.js';
@@ -39,8 +37,7 @@ app.use(helmet());
 app.use(cors());
 
 // Routes de base (à compléter)
-
-
+app.use('/api/orders', orderCountRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/franchises', franchiseRoutes);

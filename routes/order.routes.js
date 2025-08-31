@@ -1,14 +1,20 @@
+
 import express from 'express';
 import Order from '../models/order.js';
+import { authenticate, authorizeFranchisee, checkFranchiseeOwnership } from '../middlewares/auth.middleware.js';
 const router = express.Router();
 
 // CRUD Order
-// GET /orders : renvoie toutes les infos utiles pour l'admin
+
+// GET /orders : renvoie toutes les commandes (publique, comme avant)
 router.get('/', async (req, res) => {
   try {
     const filter = {};
     if (req.query.userId) {
       filter.userId = req.query.userId;
+    }
+    if (req.query.franchiseId) {
+      filter.franchiseId = req.query.franchiseId;
     }
     const orders = await Order.find(filter)
       .populate({ path: 'userId', select: 'email nom prenom adresseLivraison' })

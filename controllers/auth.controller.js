@@ -35,8 +35,24 @@ export const login = async (req, res) => {
     const isMatch = await bcrypt.compare(motDePasse, user.motDePasse);
     if (!isMatch) return res.status(400).json({ message: 'Identifiants invalides.' });
 
+    let franchiseId = null;
+    if (user.role === 'franchisee') {
+      // Find the franchise for this user
+      const Franchise = (await import('../models/franchise.js')).default;
+      const franchise = await Franchise.findOne({ userId: user._id });
+      if (franchise) franchiseId = franchise._id;
+    }
+
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '2h' });
-    res.status(200).json({ token, user: { id: user._id, email: user.email, role: user.role } });
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+        ...(franchiseId && { franchiseId })
+      }
+    });
   } catch (err) {
     res.status(500).json({ message: 'Erreur lors de la connexion.', error: err });
   }

@@ -10,6 +10,9 @@ import cors from 'cors';
 // import { errorHandler } from './middlewares/errorHandler.js'; // à créer
 
 import orderCountRoutes from './routes/order.count.routes.js';
+import breakdownReportRoutes from './routes/breakdownreport.routes.js';
+import breakdownHistoryRoutes from './routes/breakdownHistory.routes.js';
+import reservationRoutes from './routes/reservation.routes.js';
 import reviewRoutes from './routes/review.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import franchiseRoutes from './routes/franchise.routes.js';
@@ -24,7 +27,7 @@ import newsletterRoutes from './routes/newsletter.routes.js';
 import fidelityRoutes from './routes/fidelity.routes.js';
 import eventRoutes from './routes/event.routes.js';
 import userRoutes from './routes/user.routes.js';
-// import userRoutes from './routes/user.routes.js';
+import supplyRoutes from './routes/supply.routes.js';
 
 dotenv.config();
 const app = express();
@@ -50,8 +53,14 @@ app.use('/api/breakdowns', breakdownRoutes);
 app.use('/api/menus', menuRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/fidelity', fidelityRoutes);
+
 app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
+
+app.use('/api/reservations', reservationRoutes);
+app.use('/api/breakdownreports', breakdownReportRoutes);
+app.use('/api/breakdownHistory', breakdownHistoryRoutes);
+// app.use('/api/supplies', supplyRoutes);
 
 app.get('/', (req, res) => res.send("API Driv'n Cook running"));
 

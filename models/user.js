@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   prenom: String,
   adresseLivraison: String,
   dateNaissance: Date,
-  role: { type: String, enum: ['franchise', 'client', 'admin'], required: true }
+  role: { type: String, enum: ['franchisee', 'client', 'admin'], required: true }
 });
 
 export default mongoose.model('User', userSchema);
